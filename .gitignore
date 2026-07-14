@@ -1,0 +1,9 @@
+frontend/venv/
+backend/venv/
+venv/
+__pycache__/
+*.pyc
+*.db
+*.sqlite
+.env
+node_modules/

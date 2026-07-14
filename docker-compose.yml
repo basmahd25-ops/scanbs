@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: scanbs-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - scanbs-data:/app/data
+    environment:
+      - DB_PATH=/app/data/scanbs_history.db
+      - CHROMIUM_PATH=/usr/bin/chromium
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - OLLAMA_MODEL=qwen2.5:7b
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    networks:
+      - scanbs-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: scanbs-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - scanbs-net
+
+volumes:
+  scanbs-data:
+
+networks:
+  scanbs-net:
+    driver: bridge
