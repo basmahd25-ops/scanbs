@@ -3,10 +3,12 @@ FROM python:3.11-slim
 # nmap (port scanning) + chromium (screenshots via Playwright, using the
 # system browser instead of Playwright's own download — avoids needing
 # network access to Playwright's CDN at build time) + fonts for correct
-# text rendering in screenshots and the generated PDF report.
+# text rendering in screenshots and the generated PDF report. libcairo2 allows
+# CairoSVG to normalize SVG target logos before embedding them in the PDF.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nmap \
     libcap2-bin \
+    libcairo2 \
     chromium \
     fonts-liberation \
     fonts-dejavu-core \

@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   backend:
     build:
@@ -15,6 +13,8 @@ services:
       - CHROMIUM_PATH=/usr/bin/chromium
       - OLLAMA_HOST=http://host.docker.internal:11434
       - OLLAMA_MODEL=qwen2.5:7b
+      - OLLAMA_TIMEOUT_SECONDS=90
+      - MITIGATION_LIMIT=8
     cap_add:
       - NET_ADMIN
       - NET_RAW

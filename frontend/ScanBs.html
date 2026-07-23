@@ -1360,7 +1360,9 @@ function exportJSON() {
 
 function downloadPDF() {
   if(!scanData.scan_id) return;
-  window.open(`${API}/api/report/${scanData.scan_id}`, '_blank');
+  // Cache-busting forces the browser and proxies to request the freshly
+  // regenerated PDF instead of reopening an older report with the same name.
+  window.open(`${API}/api/report/${scanData.scan_id}?v=${Date.now()}`, '_blank');
 }
 
 function exportMarkdown() {
